@@ -13,3 +13,4 @@ spec:
       command: ['wget']
       args: ['{{ include "fullstack-app.fullname" . }}:{{ .Values.service.port }}']
   restartPolicy: Never
+{{ .Values.frontend.service.port }}
