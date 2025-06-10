@@ -1,0 +1,10 @@
+# Ignore Terraform local files
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.backup
+terraform/*.tfvars
+
+# Ignore editor or OS files (optional)
+*.swp
+*.DS_Store
+.vscode/

@@ -60,7 +60,7 @@ resource "aws_route_table_association" "public_association" {
 }
 
 resource "aws_eip" "nat_eip" {
-  vpc = true
+  # vpc argument removed — deprecated
 }
 
 resource "aws_nat_gateway" "nat_gw" {
