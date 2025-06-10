@@ -1,0 +1,27 @@
+frontend:
+  replicaCount: 1
+  image:
+    repository: martycpt/frontend
+    tag: latest
+  service:
+    type: LoadBalancer
+    port: 80
+
+backend:
+  replicaCount: 2
+  image:
+    repository: martycpt/backend
+    tag: latest
+  service:
+    type: ClusterIP
+    port: 8080
+
+ingress:
+  enabled: true
+  hosts:
+    - host: yourapp.example.com
+      paths:
+        - path: /
+          backend: frontend
+  annotations: {}
+  tls: []
