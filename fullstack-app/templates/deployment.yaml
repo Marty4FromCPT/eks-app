@@ -1,42 +1,47 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "fullstack-app.frontend.fullname" . }}
-  labels: {{- include "fullstack-app.labels" . | nindent 4 }}
+  labels:
+    {{- include "fullstack-app.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.frontend.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "fullstack-app.frontend.name" . }}
+      app: {{ include "fullstack-app.frontend.fullname" . }}
   template:
     metadata:
       labels:
-        app: {{ include "fullstack-app.frontend.name" . }}
+        app: {{ include "fullstack-app.frontend.fullname" . }}
     spec:
+      serviceAccountName: {{ default (include "fullstack-app.fullname" .) .Values.serviceAccount.name }}
       containers:
         - name: frontend
           image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag }}"
           ports:
-            - containerPort: 80
+            - containerPort: {{ .Values.frontend.service.port }}
+
 ---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "fullstack-app.backend.fullname" . }}
-  labels: {{- include "fullstack-app.labels" . | nindent 4 }}
+  labels:
+    {{- include "fullstack-app.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.backend.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "fullstack-app.backend.name" . }}
+      app: {{ include "fullstack-app.backend.fullname" . }}
   template:
     metadata:
       labels:
-        app: {{ include "fullstack-app.backend.name" . }}
+        app: {{ include "fullstack-app.backend.fullname" . }}
     spec:
+      serviceAccountName: {{ default (include "fullstack-app.fullname" .) .Values.serviceAccount.name }}
       containers:
         - name: backend
           image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}"
           ports:
-            - containerPort: 8080
+            - containerPort: {{ .Values.backend.service.port }}
