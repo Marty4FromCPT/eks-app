@@ -25,3 +25,6 @@ ingress:
           backend: frontend
   annotations: {}
   tls: []
+serviceAccount:
+  create: true
+  name: ""
