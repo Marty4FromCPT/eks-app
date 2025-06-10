@@ -11,6 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "fullstack-app.fullname" . }}:{{ .Values.service.port }}']
+      args: ['{{ include "fullstack-app.fullname" . }}:{{ .Values.frontend.service.port }}']
   restartPolicy: Never
-{{ .Values.frontend.service.port }}
